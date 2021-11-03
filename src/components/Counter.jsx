@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement, incrementByAmount } from "../redux/counter";
+import {
+  increment,
+  decrement,
+  incrementByAmount,
+  getPosts,
+} from "../redux/counter";
 
 const Counter = () => {
-  const { count } = useSelector((state) => state.counter);
+  const { count, todo } = useSelector((state) => state.counter);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
 
   const incrementValue = () => {
     dispatch(increment());
@@ -22,6 +31,9 @@ const Counter = () => {
       {count}
       <button onClick={decrementValue}>decrement</button>
       <button onClick={() => incrementByValue(30)}>increment by 30</button>
+      <div>
+          <h1>{todo.title}</h1>
+      </div>
     </div>
   );
 };
